@@ -1,4 +1,6 @@
 import telebot
+import random
+from telebot.types import ReactionTypeEmoji
 from u1l2 import gen_pass
 # Замени 'TOKEN' на токен твоего бота
 # Этот токен ты получаешь от BotFather, чтобы бот мог работать
@@ -18,6 +20,10 @@ def send_bye(message):
 @bot.message_handler(commands=['pass'])
 def pass_cre(message):
     bot.reply_to(message, gen_pass(10))
+@bot.message_handler(commands=["emoji"])
+def send_reaction(message):
+    emo = ["\U0001F525", "\U0001F917", "\U0001F60E"]  # or use ["🔥", "🤗", "😎"]
+    bot.set_message_reaction(message.chat.id, message.id, [ReactionTypeEmoji(random.choice(emo))], is_big=False)
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
     bot.reply_to(message, message.text)
