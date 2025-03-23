@@ -13,7 +13,12 @@ def send_welcome(message):
 @bot.message_handler(commands=['hello'])
 def send_hello(message):
     bot.reply_to(message, ":)")
-   
+@bot.message_handler(commands=['calc'])
+def send_calc(message):
+    try:
+        eval("bot.reply_to(message,{eval(message.text.split()[1])})")
+    except NameError:
+        bot.reply_to(message, "couldn't calculate")
 @bot.message_handler(commands=['bye'])
 def send_bye(message):
     bot.reply_to(message, "Пока! Удачи!")
