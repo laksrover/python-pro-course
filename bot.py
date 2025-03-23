@@ -2,6 +2,8 @@ import telebot
 import random
 from telebot.types import ReactionTypeEmoji
 from u1l2 import gen_pass
+import os
+import datetime
 # Замени 'TOKEN' на токен твоего бота
 # Этот токен ты получаешь от BotFather, чтобы бот мог работать
 bot = telebot.TeleBot("7770954749:AAFWEkcjpNpRfQTKizCQmqwbNwpxJQeb6Go")
@@ -9,7 +11,22 @@ bot = telebot.TeleBot("7770954749:AAFWEkcjpNpRfQTKizCQmqwbNwpxJQeb6Go")
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     bot.reply_to(message, "Привет! Я твой Telegram бот. Напиши что-нибудь!")
-   
+
+@bot.message_handler(commands=['mem'])
+def send_mem(message):
+    img_name = random.choice(os.listdir('images'))
+    with open(f'images/{img_name}', 'rb') as f:  
+        bot.send_photo(message.chat.id, f)  
+
+@bot.message_handler(commands=['memday'])
+def send_memd(message):
+    daymo = datetime.datetime.now()
+    daymn = int((daymo.strftime("%d")))%4
+
+    img_name = os.listdir('images')[daymn]
+    with open(f'images/{img_name}', 'rb') as f:  
+        bot.send_photo(message.chat.id, f)  
+          
 @bot.message_handler(commands=['hello'])
 def send_hello(message):
     bot.reply_to(message, ":)")
