@@ -6,7 +6,7 @@ import os
 import datetime
 # Замени 'TOKEN' на токен твоего бота
 # Этот токен ты получаешь от BotFather, чтобы бот мог работать
-bot = telebot.TeleBot("7770954749:AAFWEkcjpNpRfQTKizCQmqwbNwpxJQeb6Go")
+bot = telebot.TeleBot("token")
    
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
