@@ -4,6 +4,12 @@ from telebot.types import ReactionTypeEmoji
 from u1l2 import gen_pass
 import os
 import datetime
+co2v = ["24,000 MWh (for a 1,000 MW plant)	~24,000 metric tons CO₂",
+"~24,000 MWh (for a 1,000 MW plant)	~12,000 metric tons CO₂",
+"~24,000 MWh (for a 1,000 MW plant)	0 metric tons CO₂",
+"~10,000–15,000 MWh (for a 1,000 MW plant)	0 metric tons CO₂"]
+co2a = ["coal","gas","hydroelectric","wind"]
+co2r = 0
 # Замени 'TOKEN' на токен твоего бота
 # Этот токен ты получаешь от BotFather, чтобы бот мог работать
 bot = telebot.TeleBot("token")
@@ -41,6 +47,19 @@ def send_bye(message):
     bot.reply_to(message, "Пока! Удачи!")
 @bot.message_handler(commands=['pass'])
 def pass_cre(message):
+@bot.message_handler(commands=['co2quiz'])
+def send_bye(message):
+    global co2r
+    co2r = random.randint(0,3)
+    bot.reply_to(message, f"hello can you guess what power plant produces {co2v[co2r]}")
+
+@bot.message_handler(commands=['co2ans'])
+def send_bye(message):
+    if co2r == co2a.index(message.text.split()[1]):
+    
+        bot.reply_to(message, "yess you got it right!")
+    else:
+        bot.reply_to(message, f"sorry, it was {co2a[co2r]}")
     bot.reply_to(message, gen_pass(10))
 @bot.message_handler(commands=["emoji"])
 def send_reaction(message):
